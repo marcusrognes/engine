@@ -1,6 +1,8 @@
+import Logger from '/src/utilitys/Logger.js';
+
 class Engine {
 	constructor(props) {
-		console.log('Engine started with props:', props);
+		Logger.debug('Engine started with props:', props);
 	}
 
 	/**
