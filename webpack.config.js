@@ -49,10 +49,7 @@ module.exports = {
 		]
 	},
 	resolve: {
-		extensions: ['', '.js', '.jsx', '.json'],
-		alias: {
-			'sinon': 'sinon/pkg/sinon'
-		}
+		extensions: ['', '.js', '.jsx', '.json']
 	},
 	plugins: [
 		new CopyWebpackPlugin([

@@ -1,4 +1,4 @@
-import Logger from '/src/utilitys/Logger.js';
+import Logger from './utilitys/Logger.js';
 
 class Engine {
 	constructor(props) {

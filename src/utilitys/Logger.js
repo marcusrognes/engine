@@ -1,5 +1,5 @@
 class Logger {
-	static log(message, properties) {
+	static log(args, properties) {
 		let props = Object.assign({}, properties, Logger.defaultLogProps);
 
 		if (props.logLevel > Logger.currentReportLevel) {
@@ -10,41 +10,41 @@ class Logger {
 			case 5:
 			case 4:
 			case 3:
-				console.log.apply(window, message);
+				console.log.apply(window, args);
 				break;
 			case 2:
 			case 1:
-				console.error.apply(window, message);
+				console.error.apply(window, args);
 				break;
 		}
 	}
 
-	static debug(message) {
-		Logger.log(message, {
+	static debug() {
+		Logger.log(arguments, {
 			logLevel: 5
 		});
 	}
 
-	static info(message) {
-		Logger.log(message, {
+	static info() {
+		Logger.log(arguments, {
 			logLevel: 4
 		});
 	}
 
-	static warning(message) {
-		Logger.log(message, {
+	static warning() {
+		Logger.log(arguments, {
 			logLevel: 3
 		});
 	}
 
-	static error(message) {
-		Logger.log(message, {
+	static error() {
+		Logger.log(arguments, {
 			logLevel: 2
 		});
 	}
 
-	static fatal(message) {
-		Logger.log(message, {
+	static fatal() {
+		Logger.log(arguments, {
 			logLevel: 1
 		});
 	}
