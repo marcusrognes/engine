@@ -7,13 +7,13 @@ class Logger {
 		}
 
 		switch (props.logLevel) {
-			case 5:
-			case 4:
-			case 3:
+			case Logger.logLevels.debug:
+			case Logger.logLevels.info:
+			case Logger.logLevels.warning:
 				console.log.apply(window, args);
 				break;
-			case 2:
-			case 1:
+			case Logger.logLevels.error:
+			case Logger.logLevels.fatal:
 				console.error.apply(window, args);
 				break;
 		}
@@ -21,34 +21,42 @@ class Logger {
 
 	static debug() {
 		Logger.log(arguments, {
-			logLevel: 5
+			logLevel: Logger.logLevels.debug
 		});
 	}
 
 	static info() {
 		Logger.log(arguments, {
-			logLevel: 4
+			logLevel: Logger.logLevels.info
 		});
 	}
 
 	static warning() {
 		Logger.log(arguments, {
-			logLevel: 3
+			logLevel: Logger.logLevels.warning
 		});
 	}
 
 	static error() {
 		Logger.log(arguments, {
-			logLevel: 2
+			logLevel: Logger.logLevels.error
 		});
 	}
 
 	static fatal() {
 		Logger.log(arguments, {
-			logLevel: 1
+			logLevel: Logger.logLevels.fatal
 		});
 	}
 }
+
+Logger.logLevels = {
+	debug: 5,
+	info: 4,
+	warning: 3,
+	error: 2,
+	fatal: 1
+};
 
 Logger.defaultLogProps = {
 	/**
@@ -59,9 +67,9 @@ Logger.defaultLogProps = {
 	 * 2: Error
 	 * 1: Fatal
 	 */
-	logLevel: 5,
+	logLevel: Logger.logLevels.debug,
 };
 
-Logger.currentReportLevel = 5;
+Logger.currentReportLevel = Logger.logLevels.debug;
 
 export default Logger;
