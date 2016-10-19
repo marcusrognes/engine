@@ -112,6 +112,10 @@ class Engine {
 
 			this.gameObjects[key].update();
 		}
+
+		if (Input.keyDown(' ')) {
+			Logger.debug(Object.keys(Engine.currentEngine.gameObjects).length);
+		}
 	}
 
 	clearCanvas() {

@@ -9,7 +9,12 @@ class Bullet extends GameObject {
 	start() {
 		this.image = new Image();
 		this.image.src = BulletGFX;
-		this.rect = new Rect(this.transform.position.x - 10, this.transform.position.y - 10, 20, 20);
+		this.rect = new Rect(
+			this.transform.position.x,
+			this.transform.position.y,
+			20,
+			20
+		);
 	}
 
 	render() {
@@ -17,9 +22,9 @@ class Bullet extends GameObject {
 	}
 
 	update() {
-		this.transform.move(new Vector2(0, -10));
-		this.rect.x = this.transform.position.x - 10;
-		this.rect.y = this.transform.position.y - 10;
+		this.transform.move(this.transform.forward().multiply(10));
+		this.rect.x = this.transform.position.x;
+		this.rect.y = this.transform.position.y;
 	}
 }
 

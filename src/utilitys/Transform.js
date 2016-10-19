@@ -10,6 +10,10 @@ class Transform {
 		this.rotation = rotation || Transform.defaultProps.rotation;
 	}
 
+	/**
+	 *
+	 * @param vector {Vector2}
+	 */
 	move(vector) {
 		this.position.x += vector.x;
 		this.position.y += vector.y;
@@ -28,9 +32,11 @@ class Transform {
 	 * @returns {Vector2}
 	 */
 	forward() {
+		var radians = (Math.PI / 180) * this.rotation;
+
 		return new Vector2(
-			Math.cos(this.rotation),
-			Math.sin(this.rotation)
+			Math.cos(radians),
+			Math.sin(radians)
 		);
 	}
 
@@ -40,6 +46,14 @@ class Transform {
 	 */
 	angle() {
 		return Math.atan2(this.position.x, this.position.y);
+	}
+
+	/**
+	 *
+	 * @returns {Transform}
+	 */
+	clone() {
+		return new Transform(this.position.clone(), this.rotation);
 	}
 }
 

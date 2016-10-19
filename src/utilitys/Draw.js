@@ -11,8 +11,28 @@ class Draw {
 		this.context.fillStyle = oldStyle;
 	}
 
-	static image(image, rect) {
-		this.context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
+	static image(image, rect, rotation) {
+		this.context.save();
+
+		this.context.translate(
+			rect.x,
+			rect.y
+		);
+
+		this.context.rotate(rotation * Math.PI / 180);
+
+		/**
+		 * Center image for rotation
+		 */
+		this.context.drawImage(
+			image,
+			-rect.width / 2,
+			-rect.height / 2,
+			rect.width,
+			rect.height
+		);
+
+		this.context.restore();
 	}
 
 	static fillCircle(x, y, r, color) {

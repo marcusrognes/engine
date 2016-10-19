@@ -21,8 +21,15 @@ class GameObject {
 		Logger.debug('gameObject: start');
 	}
 
-	destroy() {
-		Logger.debug('gameObject: start');
+	destroy(timer) {
+		if (timer) {
+			var self = this;
+			setTimeout(()=> {
+				self.destroy();
+			}, timer);
+			return;
+		}
+
 		Engine.removeGameObject(this.id);
 	}
 }

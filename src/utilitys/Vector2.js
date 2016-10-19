@@ -16,7 +16,7 @@ class Vector2 {
 	 * @param amount {number}
 	 * @returns {Vector2}
 	 */
-	multply(amount) {
+	multiply(amount) {
 		return new Vector2(
 			this.x * amount,
 			this.y * amount
@@ -60,10 +60,18 @@ class Vector2 {
 		);
 	}
 
+	/**
+	 *
+	 * @returns {number}
+	 */
 	magnitude() {
 		return Math.sqrt(this.x * this.x + this.y * this.y);
 	}
 
+	/**
+	 *
+	 * @returns {Vector2}
+	 */
 	normalize() {
 		let magnitude = this.magnitude();
 		if (magnitude != 0) {
@@ -85,6 +93,13 @@ class Vector2 {
 		return new Vector2(
 			Mathf.Lerp(this.x, target.x, percentage),
 			Mathf.Lerp(this.y, target.y, percentage)
+		);
+	}
+
+	clone() {
+		return new Vector2(
+			this.x,
+			this.y
 		);
 	}
 
