@@ -4,11 +4,17 @@ import Input from './utilitys/Input.js';
 class Engine {
 	constructor(props) {
 		Logger.debug('Engine started with props:', props);
+		props = Object.assign({}, Engine.defaultProps, props);
 		this.canvas = props.canvas;
+		this.height = props.height;
+		this.width = props.width;
+		this.canvas.style.width = props.width + 'px';
+		this.canvas.style.height = props.height + 'px';
+		this.backgroundColor = props.backgroundColor;
 		this.context = this.canvas.getContext('2d');
 		this.fps = props.fps;
 		this.physicsUpdates = props.physicsUpdates;
-		Input.registerEvents();
+		Input.registerEvents(this.canvas);
 		this.start();
 	}
 
@@ -16,6 +22,7 @@ class Engine {
 		var self = this;
 
 		var mainloop = function () {
+			self.clearCanvas();
 			self.physicsTick();
 			self.renderTick();
 			Input.tickDone();
@@ -69,7 +76,12 @@ class Engine {
 	 * Calculates and iterates the physics
 	 */
 	physicsTick() {
+		
+	}
 
+	clearCanvas() {
+		this.context.fillStyle = this.backgroundColor;
+		this.context.fillRect(0, 0, this.width, this.height);
 	}
 }
 
@@ -78,6 +90,9 @@ Engine.defaultProps = {
 	 * domElement
 	 */
 	canvas: null,
+	backgroundColor: '#7ec0ee',
+	width: 600,
+	height: 400,
 	fps: 60
 };
 
