@@ -1,6 +1,6 @@
 import Logger from './utilitys/Logger.js';
 import Input from './utilitys/Input.js';
-
+import Draw from './utilitys/Draw.js';
 class Engine {
 	constructor(props) {
 		Logger.debug('Engine started with props:', props);
@@ -14,13 +14,16 @@ class Engine {
 		this.context = this.canvas.getContext('2d');
 		this.fps = props.fps;
 		this.physicsUpdates = props.physicsUpdates;
-		Input.registerEvents(this.canvas);
+		this.gameObjects = [];
 		this.start();
 	}
 
 	start() {
-		var self = this;
+		Input.registerEvents(this.canvas);
+		Draw.setContext(this.context);
+		Draw.setCanvas(this.canvas);
 
+		var self = this;
 		var mainloop = function () {
 			self.clearCanvas();
 			self.physicsTick();
@@ -76,12 +79,11 @@ class Engine {
 	 * Calculates and iterates the physics
 	 */
 	physicsTick() {
-		
-	}
 
+	}
+	
 	clearCanvas() {
-		this.context.fillStyle = this.backgroundColor;
-		this.context.fillRect(0, 0, this.width, this.height);
+		Draw.fill(this.backgroundColor);
 	}
 }
 
