@@ -11,6 +11,17 @@ class Draw {
 		this.context.fillStyle = oldStyle;
 	}
 
+	static image(image, rect) {
+		this.context.drawImage(image, rect.x, rect.y, rect.width, rect.height);
+	}
+
+	static fillCircle(x, y, r, color) {
+		this.context.beginPath();
+		this.context.arc(x, y, r, 0, 2 * Math.PI, false);
+		this.context.fillStyle = color;
+		this.context.fill();
+	}
+
 	static setCanvas(canvas) {
 		Draw.canvas = canvas;
 		Draw.rect = canvas.getBoundingClientRect();

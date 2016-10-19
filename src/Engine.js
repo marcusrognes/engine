@@ -8,13 +8,14 @@ class Engine {
 		this.canvas = props.canvas;
 		this.height = props.height;
 		this.width = props.width;
-		this.canvas.style.width = props.width + 'px';
-		this.canvas.style.height = props.height + 'px';
+		this.canvas.width = props.width;
+		this.canvas.height = props.height;
 		this.backgroundColor = props.backgroundColor;
 		this.context = this.canvas.getContext('2d');
 		this.fps = props.fps;
 		this.physicsUpdates = props.physicsUpdates;
-		this.gameObjects = [];
+		this.gameObjects = {};
+		Engine.setCurrentEngine(this);
 		this.start();
 	}
 
@@ -67,25 +68,58 @@ class Engine {
 		}
 	}
 
+	static addGameObject(gameObject) {
+		if (Engine.currentEngine.gameObjects[gameObject.id]) {
+			Logger.warning('Warning: gameObject already added to engine instance.');
+			return;
+		}
+
+		Engine.currentEngine.gameObjects[gameObject.id] = gameObject;
+
+		Engine.currentEngine.gameObjects[gameObject.id].start();
+	}
+
+	static removeGameObject(id) {
+		delete(Engine.currentEngine.gameObjects[id]);
+	}
+
+	static setCurrentEngine(engine) {
+		Engine.currentEngine = engine;
+	}
+
 	/**
 	 * Renders a frame
 	 */
 	renderTick() {
 		// Logger.debug('Render tick');
+		for (let key in this.gameObjects) {
+			if (!this.gameObjects.hasOwnProperty(key)) {
+				continue;
+			}
 
+			this.gameObjects[key].render();
+		}
 	}
 
 	/**
 	 * Calculates and iterates the physics
 	 */
 	physicsTick() {
+		for (let key in this.gameObjects) {
+			if (!this.gameObjects.hasOwnProperty(key)) {
+				continue;
+			}
 
+			this.gameObjects[key].update();
+		}
 	}
-	
+
 	clearCanvas() {
 		Draw.fill(this.backgroundColor);
 	}
 }
+
+Engine.currentEngine = null;
 
 Engine.defaultProps = {
 	/**

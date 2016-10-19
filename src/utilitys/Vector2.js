@@ -12,6 +12,68 @@ class Vector2 {
 	}
 
 	/**
+	 *
+	 * @param amount {number}
+	 * @returns {Vector2}
+	 */
+	multply(amount) {
+		return new Vector2(
+			this.x * amount,
+			this.y * amount
+		);
+	}
+
+
+	/**
+	 *
+	 * @param amount
+	 * @returns {Vector2}
+	 */
+	divide(amount) {
+		return new Vector2(
+			this.x / amount,
+			this.y / amount
+		);
+	}
+
+	/**
+	 *
+	 * @param vector {Vector2}
+	 * @returns {Vector2}
+	 */
+	add(vector) {
+		return new Vector2(
+			this.x + vector.x,
+			this.y + vector.y
+		);
+	}
+
+	/**
+	 *
+	 * @param vector {Vector2}
+	 * @returns {Vector2}
+	 */
+	subtract(vector) {
+		return new Vector2(
+			this.x - vector.x,
+			this.y - vector.y
+		);
+	}
+
+	magnitude() {
+		return Math.sqrt(this.x * this.x + this.y * this.y);
+	}
+
+	normalize() {
+		let magnitude = this.magnitude();
+		if (magnitude != 0) {
+			return this.divide(magnitude);
+		}
+
+		return new Vector2(0, 0);
+	}
+
+	/**
 	 * Linear interpolation
 	 * @see https://en.wikipedia.org/wiki/Linear_interpolation
 	 *

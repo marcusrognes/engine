@@ -6,7 +6,7 @@ class Transform {
 	 * @param rotation {Number}
 	 */
 	constructor(position, rotation) {
-		this.position = position || Transform.defaultProps.position;
+		this.position = position || new Vector2(Transform.defaultProps.position[0], Transform.defaultProps.position[1]);
 		this.rotation = rotation || Transform.defaultProps.rotation;
 	}
 
@@ -15,14 +15,37 @@ class Transform {
 		this.position.y += vector.y;
 	}
 
+	/**
+	 *
+	 * @param amount {number}
+	 */
 	rotate(amount) {
 		this.rotation += amount;
+	}
+
+	/**
+	 *
+	 * @returns {Vector2}
+	 */
+	forward() {
+		return new Vector2(
+			Math.cos(this.rotation),
+			Math.sin(this.rotation)
+		);
+	}
+
+	/**
+	 *
+	 * @returns {number}
+	 */
+	angle() {
+		return Math.atan2(this.position.x, this.position.y);
 	}
 }
 
 
 Transform.defaultProps = {
-	position: new Vector2(0, 0),
+	position: [0, 0],
 	rotation: 0
 };
 
