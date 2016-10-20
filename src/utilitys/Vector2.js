@@ -96,11 +96,23 @@ class Vector2 {
 		);
 	}
 
+	/**
+	 *
+	 * @returns {Vector2}
+	 */
 	clone() {
 		return new Vector2(
 			this.x,
 			this.y
 		);
+	}
+
+	/**
+	 *
+	 * @returns {number}
+	 */
+	angle() {
+		return Math.atan2(this.x, this.y) * 180 / Math.PI;
 	}
 
 	/**
@@ -113,6 +125,15 @@ class Vector2 {
 	 */
 	static Lerp(a, b, p) {
 		return a.lerp(b, p);
+	}
+
+	static FromAngle(angle) {
+		var radians = (Math.PI / 180) * angle;
+
+		return new Vector2(
+			Math.cos(radians),
+			Math.sin(radians)
+		);
 	}
 }
 

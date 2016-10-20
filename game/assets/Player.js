@@ -3,6 +3,7 @@ import Engine from '../../src/Engine.js';
 import Draw from '../../src/utilitys/Draw.js';
 import Mathf from '../../src/utilitys/Mathf.js';
 import Input from '../../src/utilitys/Input.js';
+import Vector2 from '../../src/utilitys/Vector2.js';
 import PlayerGFX from './PlayerGFX.png';
 import Bullet from './Bullet.js';
 import Rect from "../../src/primitives/Rect";
@@ -15,6 +16,8 @@ class Player extends GameObject {
 		this.speed = 5;
 		this.rotationSpeed = 5;
 		this.lastSpeed = 0;
+		this.shootCooldown = 100;
+		this.lastShot = 0;
 	}
 
 	render() {
@@ -26,13 +29,35 @@ class Player extends GameObject {
 		), this.transform.rotation + 90);
 	}
 
-	spawnBullet(angle) {
+	specialSkill() {
+		this.spawnBullet(this.transform.rotation);
+		this.spawnBullet(this.transform.rotation - 90);
+		this.spawnBullet(this.transform.rotation - 45);
+		this.spawnBullet(this.transform.rotation - 144);
+		this.spawnBullet(this.transform.rotation + 90);
+		this.spawnBullet(this.transform.rotation + 45);
+		this.spawnBullet(this.transform.rotation + 144);
+		this.spawnBullet(this.transform.rotation + 180);
+	}
+
+	shoot() {
+		this.spawnBullet(-(this.transform.position.subtract(new Vector2(
+			Input.mousePosition.x,
+			Input.mousePosition.y
+		)).angle() + 90), 20);
+	}
+
+	spawnBullet(angle, speed) {
 		var bullet = new Bullet();
 
 		bullet.transform.position = this.transform.position.clone()
-			.add(this.transform.forward().multiply(40));
+			.add(Vector2.FromAngle(angle).multiply(40));
 
-		bullet.transform.rotate((angle || 0) + this.transform.rotation);
+		bullet.transform.rotate(angle);
+
+		if (speed) {
+			bullet.speed = speed;
+		}
 
 		bullet.destroy(1000);
 
@@ -40,8 +65,8 @@ class Player extends GameObject {
 	}
 
 	update() {
-		if (Input.mouseButton(1)) {
-			this.spawnBullet();
+		if (Input.keyDown(' ')) {
+			this.specialSkill();
 		}
 
 		var moveSpeed = 0;
@@ -60,6 +85,10 @@ class Player extends GameObject {
 
 		if (Input.key('s')) {
 			moveSpeed -= 1
+		}
+
+		if (Input.mouseButton(1) && this.lastShot < new Date().getTime() + this.shootCooldown) {
+			this.shoot();
 		}
 
 		this.lastSpeed = Mathf.Lerp(this.lastSpeed, moveSpeed, 0.01);

@@ -8,6 +8,7 @@ import Rect from "../../src/primitives/Rect";
 class Bullet extends GameObject {
 	start() {
 		this.image = new Image();
+		this.speed = this.speed || 12;
 		this.image.src = BulletGFX;
 		this.rect = new Rect(
 			this.transform.position.x,
@@ -22,7 +23,7 @@ class Bullet extends GameObject {
 	}
 
 	update() {
-		this.transform.move(this.transform.forward().multiply(10));
+		this.transform.move(this.transform.forward().multiply(this.speed));
 		this.rect.x = this.transform.position.x;
 		this.rect.y = this.transform.position.y;
 	}

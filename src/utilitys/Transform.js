@@ -32,12 +32,7 @@ class Transform {
 	 * @returns {Vector2}
 	 */
 	forward() {
-		var radians = (Math.PI / 180) * this.rotation;
-
-		return new Vector2(
-			Math.cos(radians),
-			Math.sin(radians)
-		);
+		return Vector2.FromAngle(this.rotation);
 	}
 
 	/**
