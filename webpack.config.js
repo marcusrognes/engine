@@ -59,7 +59,7 @@ module.exports = {
 			allChunks: true
 		}),
 		new HtmlWebpackPlugin({
-			title: 'Effekten av siva',
+			title: 'Engine',
 			template: 'index.html',
 			filename: 'index.html',
 			files: {
