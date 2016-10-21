@@ -11,7 +11,7 @@ module.exports = {
 	output: {
 		path: 'build',
 		publicPath: '/',
-		filename: './js/[name].[hash:6].js'
+		filename: 'js/[name].js'
 	},
 	externals: {
 		'jsdom': 'window'
@@ -65,8 +65,8 @@ module.exports = {
 			files: {
 				chunks: {
 					main: {
-						entry: '/js/[name].[hash:6].js',
-						css: ['/css/[name].[hash:6].css']
+						entry: 'js/[name].js',
+						css: ['css/[name].css']
 					},
 				}
 			}

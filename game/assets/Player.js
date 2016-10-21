@@ -16,7 +16,7 @@ class Player extends GameObject {
 		this.speed = 5;
 		this.rotationSpeed = 5;
 		this.lastSpeed = 0;
-		this.shootCooldown = 100;
+		this.shootCooldown = 300;
 		this.lastShot = 0;
 	}
 
@@ -25,7 +25,7 @@ class Player extends GameObject {
 			this.transform.position.x,
 			this.transform.position.y,
 			this.rect.width,
-			this.rect.height
+			this.rect.height,
 		), this.transform.rotation + 90);
 	}
 
@@ -44,7 +44,7 @@ class Player extends GameObject {
 		this.spawnBullet(-(this.transform.position.subtract(new Vector2(
 			Input.mousePosition.x,
 			Input.mousePosition.y
-		)).angle() + 90), 20);
+		)).angle() + 90), 10);
 	}
 
 	spawnBullet(angle, speed) {
@@ -59,7 +59,7 @@ class Player extends GameObject {
 			bullet.speed = speed;
 		}
 
-		bullet.destroy(1000);
+		bullet.destroy(2000);
 
 		Engine.addGameObject(bullet);
 	}
@@ -87,12 +87,12 @@ class Player extends GameObject {
 			moveSpeed -= 1
 		}
 
-		if (Input.mouseButton(1) && this.lastShot < new Date().getTime() + this.shootCooldown) {
+		if (Input.mouseButton(1) && this.lastShot < new Date().getTime()) {
 			this.shoot();
+			this.lastShot = new Date().getTime() + this.shootCooldown;
 		}
 
 		this.lastSpeed = Mathf.Lerp(this.lastSpeed, moveSpeed, 0.01);
-
 		this.transform.move(this.transform.forward().multiply(this.lastSpeed * this.speed));
 	}
 }

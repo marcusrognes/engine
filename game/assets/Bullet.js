@@ -19,7 +19,12 @@ class Bullet extends GameObject {
 	}
 
 	render() {
-		Draw.image(this.image, this.rect);
+		Draw.image(this.image, new Rect(
+			this.transform.position.x,
+			this.transform.position.y,
+			this.rect.width,
+			this.rect.height,
+		), this.transform.rotation + 90);
 	}
 
 	update() {

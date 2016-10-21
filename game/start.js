@@ -6,6 +6,8 @@ import Vector2 from "../src/utilitys/Vector2";
 Logger.currentReportLevel = Logger.logLevels.debug;
 
 var game = new Engine({
+	width: window.innerWidth,
+	height: window.innerHeight,
 	canvas: document.getElementById('engine')
 });
 

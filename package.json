@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --progress --colors --hot --inline",
+    "start": "./node_modules/.bin/webpack-dev-server --progress --colors --hot --inline --port=3001",
     "build": "./node_modules/.bin/webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
