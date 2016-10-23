@@ -4,4 +4,4 @@ This game engine is currently solely for self teaching, for getting more up to s
 
 
 
-Thanks to Kenney at http://opengameart.org/ for his free [Space Shooter Redux](http://opengameart.org/content/space-shooter-redux) pack, that I am currently using for testing out my concepts.
+Thanks to [Kenney](Kenney.nl) at http://opengameart.org/ for his free [Space Shooter Redux](http://opengameart.org/content/space-shooter-redux) pack, that I am currently using for testing out my concepts.
