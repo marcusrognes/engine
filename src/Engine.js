@@ -99,7 +99,7 @@ class Engine {
 				continue;
 			}
 
-			this.gameObjects[key].render();
+			this.gameObjects[key]._render();
 		}
 	}
 
@@ -112,7 +112,7 @@ class Engine {
 				continue;
 			}
 
-			this.gameObjects[key].update();
+			this.gameObjects[key]._update();
 		}
 
 		if (Input.keyDown(' ')) {

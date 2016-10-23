@@ -7,18 +7,41 @@ class GameObject {
 	constructor() {
 		this.id = SystemId.get();
 		this.transform = new Transform();
+		this.children = {};
 	}
 
 	render() {
-		Logger.debug('gameObject: render');
+
 	}
 
 	update() {
-		Logger.debug('gameObject: update');
+
+	}
+
+	_update() {
+		this.update();
+		if (!this.children) {
+			return;
+		}
+
+		for (let key in this.children) {
+			this.children[key].update();
+		}
+	}
+
+	_render() {
+		this.render();
+
+		if (!this.children) {
+			return;
+		}
+
+		for (let key in this.children) {
+			this.children[key].render();
+		}
 	}
 
 	start() {
-		Logger.debug('gameObject: start');
 	}
 
 	destroy(timer) {
@@ -31,6 +54,21 @@ class GameObject {
 		}
 
 		Engine.removeGameObject(this.id);
+	}
+
+	addGameObject(gameObject) {
+		if (this.children[gameObject.id]) {
+			Logger.warning('Warning: gameObject already added to engine instance.');
+			return;
+		}
+
+		this.children[gameObject.id] = gameObject;
+
+		this.children[gameObject.id].start();
+	}
+
+	removeGameObject(id) {
+		delete(this.children[id]);
 	}
 }
 

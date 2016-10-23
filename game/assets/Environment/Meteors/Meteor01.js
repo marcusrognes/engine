@@ -21,7 +21,7 @@ class Meteor01 extends GameObject {
 			this.transform.position.y,
 			this.rect.width,
 			this.rect.height,
-		), 0);
+		), this.transform.rotation);
 	}
 
 	update() {
