@@ -1,5 +1,5 @@
 import Logger from './Logger.js';
-
+import Draw from './Draw.js';
 class Input {
 	static registerEvents(canvas) {
 		var canvasRect = canvas.getBoundingClientRect();
@@ -17,11 +17,11 @@ class Input {
 			delete(Input._keyDown[e.key]);
 			delete(Input._keyHold[e.key]);
 		};
-		
+
 		canvas.addEventListener('mousemove', function (e) {
-			Input.mousePosition = {
-				x: e.clientX - canvasRect.left,
-				y: e.clientY - canvasRect.top
+			Input.screenSpaceMousePosition = {
+				x: (e.clientX - canvasRect.left),
+				y: (e.clientY - canvasRect.top)
 			};
 		});
 
@@ -69,6 +69,15 @@ class Input {
 		return !!Input._mouseUp[which];
 	}
 
+	static tickStart() {
+		let renderBounds = Draw.getRenderBounds();
+
+		Input.worldSpaceMousePosition = {
+			x: Input.screenSpaceMousePosition.x + renderBounds.left,
+			y: Input.screenSpaceMousePosition.y + renderBounds.top
+		};
+	}
+
 	static tickDone() {
 		/**
 		 * Clear current down and up
@@ -79,9 +88,18 @@ class Input {
 		Input._mouseDown = {};
 		Input._mouseUp = {};
 	}
+
+	static setCamera(camera) {
+		Input.activeCamera = camera;
+	}
 }
 
-Input.mousePosition = {
+Input.screenSpaceMousePosition = {
+	x: 0,
+	y: 0
+};
+
+Input.worldSpaceMousePosition = {
 	x: 0,
 	y: 0
 };
@@ -93,5 +111,7 @@ Input._mouseUp = {};
 Input._keyDown = {};
 Input._keyHold = {};
 Input._keyUp = {};
+
+Input.activeCamera = null;
 
 export default Input;

@@ -1,12 +1,12 @@
-import GameObject from '../../src/utilitys/GameObject.js';
-import Engine from '../../src/Engine.js';
-import Draw from '../../src/utilitys/Draw.js';
-import Mathf from '../../src/utilitys/Mathf.js';
-import Input from '../../src/utilitys/Input.js';
-import Vector2 from '../../src/utilitys/Vector2.js';
+import GameObject from '../../../src/utilitys/GameObject.js';
+import Engine from '../../../src/Engine.js';
+import Draw from '../../../src/utilitys/Draw.js';
+import Mathf from '../../../src/utilitys/Mathf.js';
+import Input from '../../../src/utilitys/Input.js';
+import Vector2 from '../../../src/utilitys/Vector2.js';
 import PlayerGFX from './PlayerGFX.png';
 import Bullet from './Bullet.js';
-import Rect from "../../src/primitives/Rect";
+import Rect from "../../../src/primitives/Rect";
 
 class Player extends GameObject {
 	start() {
@@ -18,6 +18,7 @@ class Player extends GameObject {
 		this.lastSpeed = 0;
 		this.shootCooldown = 300;
 		this.lastShot = 0;
+		this.camera = this.camera || null;
 	}
 
 	render() {
@@ -42,8 +43,8 @@ class Player extends GameObject {
 
 	shoot() {
 		this.spawnBullet(-(this.transform.position.subtract(new Vector2(
-			Input.mousePosition.x,
-			Input.mousePosition.y
+			Input.worldSpaceMousePosition.x,
+			Input.worldSpaceMousePosition.y
 		)).angle() + 90), 10);
 	}
 
@@ -94,6 +95,10 @@ class Player extends GameObject {
 
 		this.lastSpeed = Mathf.Lerp(this.lastSpeed, moveSpeed, 0.01);
 		this.transform.move(this.transform.forward().multiply(this.lastSpeed * this.speed));
+
+		if (this.camera) {
+			this.camera.transform.position = this.transform.position.clone();
+		}
 	}
 }
 

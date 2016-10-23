@@ -15,6 +15,7 @@ class Engine {
 		this.fps = props.fps;
 		this.physicsUpdates = props.physicsUpdates;
 		this.gameObjects = {};
+		this.currentCamera = null;
 		Engine.setCurrentEngine(this);
 		this.start();
 	}
@@ -27,6 +28,7 @@ class Engine {
 		var self = this;
 		var mainloop = function () {
 			self.clearCanvas();
+			Input.tickStart();
 			self.physicsTick();
 			self.renderTick();
 			Input.tickDone();
@@ -120,6 +122,12 @@ class Engine {
 
 	clearCanvas() {
 		Draw.fill(this.backgroundColor);
+	}
+
+	static setActiveCamera(camera) {
+		Engine.currentEngine.currentCamera = camera;
+		Draw.setCamera(camera);
+		Input.setCamera(camera);
 	}
 }
 

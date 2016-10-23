@@ -1,9 +1,9 @@
-import GameObject from '../../src/utilitys/GameObject.js';
-import Draw from '../../src/utilitys/Draw.js';
-import Input from '../../src/utilitys/Input.js';
-import Vector2 from '../../src/utilitys/Vector2.js';
+import GameObject from '../../../src/utilitys/GameObject.js';
+import Draw from '../../../src/utilitys/Draw.js';
+import Input from '../../../src/utilitys/Input.js';
+import Vector2 from '../../../src/utilitys/Vector2.js';
 import BulletGFX from './BulletGFX.png';
-import Rect from "../../src/primitives/Rect";
+import Rect from "../../../src/primitives/Rect";
 
 class Bullet extends GameObject {
 	start() {
@@ -13,8 +13,8 @@ class Bullet extends GameObject {
 		this.rect = new Rect(
 			this.transform.position.x,
 			this.transform.position.y,
-			20,
-			20
+			10,
+			40
 		);
 	}
 
