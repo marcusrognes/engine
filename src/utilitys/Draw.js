@@ -35,16 +35,27 @@ class Draw {
 			rotation: 0,
 			shadow: null,
 			image: null,
-			blendMode: 'normal'
+			blendMode: 'normal',
+			boundCulling: true
 		}, props);
 
 		let renderBounds = Draw.getRenderBounds();
 
+
+		if (props.boundCulling) {
+			if (!Draw.ShouldRender(props.x, props.y, renderBounds)) {
+				return;
+			}
+		}
+
+		let finalX = props.x - renderBounds.left;
+		let finalY = props.y - renderBounds.top;
+
 		Draw.context.save();
 
 		Draw.context.translate(
-			props.x - renderBounds.left,
-			props.y - renderBounds.top
+			finalX,
+			finalY
 		);
 
 		Draw.context.rotate(props.rotation * Math.PI / 180);
@@ -101,11 +112,20 @@ class Draw {
 
 		let renderBounds = Draw.getRenderBounds();
 
+		if (props.boundCulling) {
+			if (!Draw.ShouldRender(props.x, props.y, renderBounds)) {
+				return;
+			}
+		}
+
+		let finalX = props.x - renderBounds.left;
+		let finalY = props.y - renderBounds.top;
+
 		Draw.context.save();
 
 		Draw.context.translate(
-			props.x - renderBounds.left,
-			props.y - renderBounds.top
+			finalX,
+			finalY
 		);
 
 		Draw.context.rotate(rotation * Math.PI / 180);
@@ -194,8 +214,21 @@ class Draw {
 	static setCamera(camera) {
 		Draw.currentCamera = camera;
 	}
+
+	/**
+	 * @return {boolean}
+	 */
+	static ShouldRender(x, y, renderBounds) {
+		return !(
+			y < renderBounds.top - Draw.boundCullingDistance ||
+			y > renderBounds.bottom + Draw.boundCullingDistance ||
+			x < renderBounds.left - Draw.boundCullingDistance ||
+			x > renderBounds.right + Draw.boundCullingDistance
+		);
+	}
 }
 
+Draw.boundCullingDistance = 200;
 Draw.currentCamera = null;
 Draw.canvas = null;
 Draw.rect = null;

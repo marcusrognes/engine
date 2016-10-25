@@ -20,7 +20,7 @@ var camera = new Camera();
 
 var asteroidBelt = new AsteroidField();
 
-asteroidBelt.size = 5000;
+asteroidBelt.size = 8000;
 asteroidBelt.totalAmountOfAsteroids = 1000;
 asteroidBelt.seed = 2;
 

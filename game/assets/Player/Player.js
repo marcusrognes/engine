@@ -1,6 +1,5 @@
 import GameObject from '../../../src/utilitys/GameObject.js';
 import Engine from '../../../src/Engine.js';
-import Draw from '../../../src/utilitys/Draw.js';
 import Mathf from '../../../src/utilitys/Mathf.js';
 import Input from '../../../src/utilitys/Input.js';
 import Vector2 from '../../../src/utilitys/Vector2.js';
