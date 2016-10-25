@@ -34,7 +34,8 @@ class Draw {
 			height: 0,
 			rotation: 0,
 			shadow: null,
-			image: null
+			image: null,
+			blendMode: 'normal'
 		}, props);
 
 		let renderBounds = Draw.getRenderBounds();
@@ -47,6 +48,8 @@ class Draw {
 		);
 
 		Draw.context.rotate(props.rotation * Math.PI / 180);
+
+		Draw.context.globalCompositeOperation = props.blendMode;
 
 		if (props.shadow) {
 			Draw.context.shadowBlur = props.shadow.blur;
@@ -92,7 +95,8 @@ class Draw {
 			rotation: 0,
 			shadow: null,
 			fill: null,
-			stroke: null
+			stroke: null,
+			blendMode: 'normal'
 		}, props);
 
 		let renderBounds = Draw.getRenderBounds();

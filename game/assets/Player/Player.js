@@ -32,7 +32,7 @@ class Player extends GameObject {
 				width: this.rect.width,
 				height: this.rect.height,
 				rotation: this.transform.rotation + 90
-			}
+			},
 		});
 	}
 
