@@ -1,49 +1,152 @@
 import Vector2 from "./Vector2";
+
 class Draw {
 	static fill(color) {
-		var oldStyle = this.context.fillStyle;
+		var oldStyle = Draw.context.fillStyle;
 
 		if (color) {
-			this.context.fillStyle = color;
+			Draw.context.fillStyle = color;
 		}
 
-		this.context.fillRect(0, 0, this.rect.width, this.rect.height);
+		Draw.context.fillRect(0, 0, Draw.rect.width, Draw.rect.height);
 
-		this.context.fillStyle = oldStyle;
+		Draw.context.fillStyle = oldStyle;
 	}
 
-	static image(image, rect, rotation) {
-		let renderBounds = Draw.getRenderBounds();
-		this.context.save();
+	/**
+	 *
+	 * @param props {{
+	 * x:number,
+	 * y:number,
+	 * width:number,
+	 * height:number,
+	 * rotation:number,
+	 * shadow:{style:string,blur:number,offsetX:number,offsetY:number},
+	 * image:{}
+	 * }}
+	 * @constructor
+	 */
+	static Image(props) {
+		props = Object.assign({
+			x: 0,
+			y: 0,
+			width: 0,
+			height: 0,
+			rotation: 0,
+			shadow: null,
+			image: null
+		}, props);
 
-		this.context.translate(
-			rect.x - renderBounds.left,
-			rect.y - renderBounds.top
+		let renderBounds = Draw.getRenderBounds();
+
+		Draw.context.save();
+
+		Draw.context.translate(
+			props.x - renderBounds.left,
+			props.y - renderBounds.top
 		);
 
-		this.context.rotate(rotation * Math.PI / 180);
+		Draw.context.rotate(props.rotation * Math.PI / 180);
+
+		if (props.shadow) {
+			Draw.context.shadowBlur = props.shadow.blur;
+			Draw.context.shadowColor = props.shadow.style;
+		} else {
+			Draw.context.shadowBlur = null;
+		}
 
 		/**
-		 * Center image for rotation
+		 * Center Image for rotation
 		 */
-		this.context.drawImage(
-			image,
-			-rect.width / 2,
-			-rect.height / 2,
-			rect.width,
-			rect.height
+		Draw.context.drawImage(
+			props.image,
+			-props.width / 2,
+			-props.height / 2,
+			props.width,
+			props.height
 		);
 
-		this.context.restore();
+		Draw.context.restore();
+	}
+
+	/**
+	 *
+	 * @param props {{
+	 * x:number,
+	 * y:number,
+	 * width:number,
+	 * height:number,
+	 * rotation:number,
+	 * shadow:{style:string,blur:number,offsetX:number,offsetY:number},
+	 * fill:{style:string,color:string},
+	 * stroke:{style:string,color:string}
+	 * }}
+	 * @constructor
+	 */
+	static Rect(props) {
+		props = Object.assign({
+			x: 0,
+			y: 0,
+			width: 0,
+			height: 0,
+			rotation: 0,
+			shadow: null,
+			fill: null,
+			stroke: null
+		}, props);
+
+		let renderBounds = Draw.getRenderBounds();
+
+		Draw.context.save();
+
+		Draw.context.translate(
+			props.x - renderBounds.left,
+			props.y - renderBounds.top
+		);
+
+		Draw.context.rotate(rotation * Math.PI / 180);
+
+		if (props.shadow) {
+			Draw.context.shadowBlur = props.shadow.blur;
+			Draw.context.shadowColor = props.shadow.style;
+		} else {
+			Draw.context.shadowBlur = null;
+		}
+
+		if (props.fill) {
+			Draw.context.fillStyle = props.fill.style;
+			Draw.context.fillRect(
+				-props.width / 2,
+				-props.height / 2,
+				props.width,
+				props.height
+			);
+		}
+
+		if (props.stroke) {
+			Draw.context.strokeStyle = props.stroke.style;
+			Draw.context.strokeRect(
+				-props.width / 2,
+				-props.height / 2,
+				props.width,
+				props.height
+			);
+		}
+
+		Draw.context.restore();
+	}
+
+	static Circle() {
+
 	}
 
 	static fillCircle(x, y, r, color) {
 		let renderBounds = Draw.getRenderBounds();
 
-		this.context.beginPath();
-		this.context.arc(x - renderBounds.left, y - renderBounds.top, r, 0, 2 * Math.PI, false);
-		this.context.fillStyle = color;
-		this.context.fill();
+		Draw.context.beginPath();
+		Draw.context.arc(x - renderBounds.left, y - renderBounds.top, r, 0, 2 * Math.PI, false);
+		Draw.context.fillStyle = color;
+		Draw.context.fill();
 	}
 
 	static getFinalX(x) {

@@ -22,12 +22,18 @@ class Player extends GameObject {
 	}
 
 	render() {
-		Draw.image(this.image, new Rect(
-			this.transform.position.x,
-			this.transform.position.y,
-			this.rect.width,
-			this.rect.height,
-		), this.transform.rotation + 90);
+		Engine.GetCurrentBuffer().add({
+			layer: 5,
+			action: 'image',
+			properties: {
+				image: this.image,
+				x: this.transform.position.x,
+				y: this.transform.position.y,
+				width: this.rect.width,
+				height: this.rect.height,
+				rotation: this.transform.rotation + 90
+			}
+		});
 	}
 
 	specialSkill() {

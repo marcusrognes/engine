@@ -2,7 +2,6 @@ import Logger from '../src/utilitys/Logger.js';
 import Engine from '../src/Engine.js';
 import Player from './assets/Player/Player.js';
 import Cursor from './assets/Player/Cursor.js';
-import Vector2 from "../src/utilitys/Vector2";
 import Camera from "../src/utilitys/Camera";
 import AsteroidField from "./assets/Environment/AsteroidField";
 

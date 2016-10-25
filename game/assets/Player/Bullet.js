@@ -4,6 +4,7 @@ import Input from '../../../src/utilitys/Input.js';
 import Vector2 from '../../../src/utilitys/Vector2.js';
 import BulletGFX from './BulletGFX.png';
 import Rect from "../../../src/primitives/Rect";
+import Engine from '../../../src/Engine.js';
 
 class Bullet extends GameObject {
 	start() {
@@ -19,12 +20,18 @@ class Bullet extends GameObject {
 	}
 
 	render() {
-		Draw.image(this.image, new Rect(
-			this.transform.position.x,
-			this.transform.position.y,
-			this.rect.width,
-			this.rect.height,
-		), this.transform.rotation + 90);
+		Engine.GetCurrentBuffer().add({
+			layer: 10,
+			action: 'image',
+			properties: {
+				image: this.image,
+				x: this.transform.position.x,
+				y: this.transform.position.y,
+				width: this.rect.width,
+				height: this.rect.height,
+				rotation: this.transform.rotation + 90
+			}
+		});
 	}
 
 	update() {

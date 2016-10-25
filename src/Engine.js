@@ -1,6 +1,8 @@
 import Logger from './utilitys/Logger.js';
 import Input from './utilitys/Input.js';
 import Draw from './utilitys/Draw.js';
+import Buffer from "./utilitys/Buffer.js";
+
 class Engine {
 	constructor(props) {
 		Logger.debug('Engine started with props:', props);
@@ -15,6 +17,7 @@ class Engine {
 		this.fps = props.fps;
 		this.physicsUpdates = props.physicsUpdates;
 		this.gameObjects = {};
+		this.buffer = new Buffer();
 		this.currentCamera = null;
 		Engine.setCurrentEngine(this);
 		this.start();
@@ -31,6 +34,7 @@ class Engine {
 			Input.tickStart();
 			self.physicsTick();
 			self.renderTick();
+			self.renderBuffer();
 			Input.tickDone();
 		};
 
@@ -120,6 +124,11 @@ class Engine {
 		}
 	}
 
+	renderBuffer() {
+		this.buffer.render();
+		this.buffer.clear();
+	}
+
 	clearCanvas() {
 		Draw.fill(this.backgroundColor);
 	}
@@ -128,6 +137,10 @@ class Engine {
 		Engine.currentEngine.currentCamera = camera;
 		Draw.setCamera(camera);
 		Input.setCamera(camera);
+	}
+
+	static GetCurrentBuffer() {
+		return Engine.currentEngine.buffer;
 	}
 }
 
