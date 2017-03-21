@@ -25,7 +25,7 @@ class GameObject {
 		}
 
 		for (let key in this.children) {
-			this.children[key].update();
+			this.children[key]._update();
 		}
 	}
 
@@ -37,7 +37,7 @@ class GameObject {
 		}
 
 		for (let key in this.children) {
-			this.children[key].render();
+			this.children[key]._render();
 		}
 	}
 
@@ -47,7 +47,7 @@ class GameObject {
 	destroy(timer) {
 		if (timer) {
 			var self = this;
-			setTimeout(()=> {
+			setTimeout(() => {
 				self.destroy();
 			}, timer);
 			return;
